@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +55,37 @@ public class JobData {
         return allJobs;
     }
 
+    /** Newly created method **********************************************************
+     * */
+
+    public  static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        String keyWordRow = " ";
+
+        for (HashMap<String, String> row : allJobs) {
+
+            keyWordRow = " ";
+            for (String aValue : row.values()) {
+
+                keyWordRow = keyWordRow.concat(aValue);
+                //System.out.println(aValue);
+                //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2222");
+            }
+
+            if (keyWordRow.toLowerCase().contains(value.toLowerCase())) {
+                //System.out.println("Rightfully added or ..................................");
+                jobs.add(row);
+            }
+
+        }
+    /* ******************************************************************  */
+        return jobs;
+    }
+
+
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
@@ -64,7 +96,9 @@ public class JobData {
      * @param column   Column that should be searched.
      * @param value Value of teh field to search for
      * @return List of all jobs matching the criteria
+     *
      */
+
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
 
         // load data, if not already loaded
